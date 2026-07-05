@@ -1,6 +1,6 @@
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
-import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
+import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepo {
-  Future<SignInResponseModel> login(SignInRequestModel requestModel);
+  Future<UserEntity> login(SignInRequestModel requestModel);
 }
