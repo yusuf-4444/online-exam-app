@@ -9,4 +9,8 @@ class AppStrings {
   static const String forgetPassword = "Forget password?";
   static const String dontHaveAccount = "Don't have an account?";
   static const String signUp = "Sign up";
+  static const String emailRequired = "Email is required";
+  static const String invalidEmail = "Invalid email address";
+  static const String passwordRequired = "Password is required";
+  static const String invalidPassword = "Password is invalid";
 }

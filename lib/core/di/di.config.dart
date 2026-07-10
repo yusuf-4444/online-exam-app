@@ -14,6 +14,13 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/auth/api/client/auth_api_client.dart' as _i213;
+import '../../features/auth/api/datasource/remote/auth_remote_data_source_impl.dart'
+    as _i26;
+import '../../features/auth/data/datasource/remote/auth_remote_data_source.dart'
+    as _i47;
+import '../../features/auth/data/repo/auth_repo_impl.dart' as _i984;
+import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
+import '../../features/auth/domain/usecases/sign_in_usecase.dart' as _i259;
 import '../dio/dio_module.dart' as _i977;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -27,6 +34,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => dioModule.dio);
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i47.AuthRemoteDataSource>(
+      () => _i26.AuthRemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
+    );
+    gh.lazySingleton<_i170.AuthRepo>(
+      () =>
+          _i984.AuthRepoImpl(remoteDataSource: gh<_i47.AuthRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i259.SignInUsecase>(
+      () => _i259.SignInUsecase(gh<_i170.AuthRepo>()),
     );
     return this;
   }

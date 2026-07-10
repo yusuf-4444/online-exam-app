@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import 'package:gap/gap.dart';
-import 'package:online_exam_app/core/shared/custom_text_form_field.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/presentation/widgets/sign_in_view_body.dart';
 
-class SignInView extends StatelessWidget {
+class SignInView extends StatefulWidget {
   const SignInView({super.key});
 
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,24 +18,7 @@ class SignInView extends StatelessWidget {
         title: Text(AppStrings.login, style: AppTextStyles.medium20),
         centerTitle: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16).r,
-        child: Column(
-          children: [
-            Gap(24.h),
-            const CustomTextFormField(
-              hintText: AppStrings.enterYourEmail,
-              labelText: AppStrings.email,
-            ),
-            Gap(16.h),
-            const CustomTextFormField(
-              hintText: AppStrings.enterYourPassword,
-              labelText: AppStrings.password,
-              obscureText: true,
-            ),
-          ],
-        ),
-      ),
+      body: const SignInViewBody(),
     );
   }
 }
