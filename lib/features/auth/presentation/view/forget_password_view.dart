@@ -7,7 +7,7 @@ class ForgetPasswordView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Forget Password'), centerTitle: false),
-      body: Center(child: Text('Forget Password View')),
+      body: const Center(child: Text('Forget Password View')),
     );
   }
 }

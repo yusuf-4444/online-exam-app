@@ -7,7 +7,7 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign Up'), centerTitle: false),
-      body: Center(child: Text('Sign Up View')),
+      body: const Center(child: Text('Sign Up View')),
     );
   }
 }

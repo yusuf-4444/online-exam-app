@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:online_exam_app/core/di/di.dart';
 import 'package:online_exam_app/core/routing/app_router.dart';
+import 'package:online_exam_app/core/utils/app_themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ class OnlineExamApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: appRouter,
+        theme: AppThemes.lightTheme,
       ),
     );
   }
