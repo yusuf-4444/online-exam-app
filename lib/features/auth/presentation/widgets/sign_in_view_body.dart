@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +8,8 @@ import 'package:online_exam_app/core/shared/custom_text_form_field.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_state.dart';
 
 class SignInViewBody extends StatefulWidget {
   const SignInViewBody({super.key});
@@ -102,25 +103,64 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                 ],
               ),
               Gap(48.h),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: AppColors.blue,
-                  minimumSize: Size(double.infinity, 48.h),
-                ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    log("Form is valid. Proceed with login logic.");
-                  }
+              BlocConsumer<SignInCubit, SignInState>(
+                listener: (context, state) {
+                  state.whenOrNull(
+                    success: (user) {
+                      // Handle successful sign-in, e.g., navigate to the home screen
+                      context.goNamed(AppRoutes.home);
+                    },
+                    error: (message) {
+                      // Show error message
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(message)));
+                    },
+                  );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 12, bottom: 12).r,
-                  child: Text(
-                    AppStrings.login,
-                    style: AppTextStyles.medium16.copyWith(
-                      color: AppColors.white,
+                builder: (context, state) {
+                  final isLoading = state.maybeWhen(
+                    loading: () => true,
+                    orElse: () => false,
+                  );
+                  return TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.blue,
+                      minimumSize: Size(double.infinity, 48.h),
                     ),
-                  ),
-                ),
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<SignInCubit>().signIn(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                            }
+                          },
+                    child: isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                              top: 12,
+                              bottom: 12,
+                            ).r,
+                            child: Text(
+                              AppStrings.login,
+                              style: AppTextStyles.medium16.copyWith(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                  );
+                },
               ),
               Gap(16.h),
               Row(

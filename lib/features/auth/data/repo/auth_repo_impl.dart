@@ -17,27 +17,22 @@ class AuthRepoImpl implements AuthRepo {
     SignInRequestModel requestModel,
   ) async {
     final response = await remoteDataSource.login(requestModel);
-    switch (response.runtimeType) {
-      case const (SuccessResponse<SignInResponseModel>):
-        final signInResponse =
-            (response as SuccessResponse<SignInResponseModel>).data;
+    switch (response) {
+      case SuccessResponse<SignInResponseModel>(:final data):
         final userEntity = UserEntity(
-          id: signInResponse.user.id,
-          email: signInResponse.user.email,
-          username: signInResponse.user.username,
-          firstName: signInResponse.user.firstName,
-          lastName: signInResponse.user.lastName,
-          phone: signInResponse.user.phone,
-          role: signInResponse.user.role,
-          isVerified: signInResponse.user.isVerified,
-          createdAt: signInResponse.user.createdAt,
+          id: data.user.id,
+          email: data.user.email,
+          username: data.user.username,
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          phone: data.user.phone,
+          role: data.user.role,
+          isVerified: data.user.isVerified,
+          createdAt: data.user.createdAt,
         );
         return SuccessResponse(userEntity);
-      case const (ErrorResponse):
-        final error = (response as ErrorResponse).error;
-        return ErrorResponse(error: error);
-      default:
-        return ErrorResponse(error: Exception('Unknown response type'));
+      case ErrorResponse<SignInResponseModel>(:final errMessage):
+        return ErrorResponse(errMessage: errMessage);
     }
   }
 }
