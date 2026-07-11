@@ -6,12 +6,18 @@ import 'package:online_exam_app/features/auth/presentation/view/forget_password_
 import 'package:online_exam_app/features/auth/presentation/view/sign_in_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_up_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
+import 'package:online_exam_app/features/splash/presentation/view/splash_view.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
+      name: AppRoutes.splash,
+      builder: (context, state) => const SplashView(),
+    ),
+    GoRoute(
+      path: '/signIn',
       name: AppRoutes.signIn,
       builder: (context, state) => BlocProvider(
         create: (context) => getIt<SignInCubit>(),

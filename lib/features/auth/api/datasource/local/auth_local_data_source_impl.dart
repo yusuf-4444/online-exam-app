@@ -7,4 +7,9 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> saveToken(String token) async {
     await storage.write(key: 'token', value: token);
   }
+
+  @override
+  Future<String?> getToken() {
+    return storage.read(key: 'token');
+  }
 }
