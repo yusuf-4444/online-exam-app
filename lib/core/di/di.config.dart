@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../features/auth/api/client/auth_api_client.dart' as _i213;
+import '../../features/auth/api/datasource/local/auth_local_data_source_impl.dart'
+    as _i485;
 import '../../features/auth/api/datasource/remote/auth_remote_data_source_impl.dart'
     as _i26;
 import '../../features/auth/data/datasource/local/auth_local_data_source.dart'
@@ -38,6 +40,9 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
     gh.singleton<_i528.PrettyDioLogger>(() => dioModule.addInterceptors());
+    gh.lazySingleton<_i201.AuthLocalDataSource>(
+      () => _i485.AuthLocalDataSourceImpl(),
+    );
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
     );
