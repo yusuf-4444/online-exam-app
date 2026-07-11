@@ -22,13 +22,21 @@ class _SignInViewBodyState extends State<SignInViewBody> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(false);
+  bool _rememberMe = false;
 
   @override
   void dispose() {
     // TODO: implement dispose
     _emailController.dispose();
     _passwordController.dispose();
+    _isFormValidNotifier.dispose();
     super.dispose();
+  }
+
+  void _validateForm() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    _isFormValidNotifier.value = isValid;
   }
 
   @override
@@ -42,6 +50,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
             children: [
               Gap(24.h),
               CustomTextFormField(
+                onChanged: (_) => _validateForm(),
                 hintText: AppStrings.enterYourEmail,
                 labelText: AppStrings.email,
                 controller: _emailController,
@@ -57,6 +66,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
               ),
               Gap(24.h),
               CustomTextFormField(
+                onChanged: (_) => _validateForm(),
                 hintText: AppStrings.enterYourPassword,
                 labelText: AppStrings.password,
                 obscureText: true,
@@ -78,7 +88,14 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
+                      Checkbox(
+                        value: _rememberMe,
+                        onChanged: (value) {
+                          setState(() {
+                            _rememberMe = value ?? false;
+                          });
+                        },
+                      ),
                       Text(
                         AppStrings.rememberMe,
                         style: AppTextStyles.regular13.copyWith(
@@ -103,62 +120,68 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                 ],
               ),
               Gap(48.h),
-              BlocConsumer<SignInCubit, SignInState>(
-                listener: (context, state) {
-                  state.whenOrNull(
-                    success: (user) {
-                      // Handle successful sign-in, e.g., navigate to the home screen
-                      context.goNamed(AppRoutes.home);
+              ValueListenableBuilder(
+                valueListenable: _isFormValidNotifier,
+                builder: (context, isFormValid, child) {
+                  return BlocConsumer<SignInCubit, SignInState>(
+                    listener: (context, state) {
+                      state.whenOrNull(
+                        success: (user) {
+                          context.goNamed(AppRoutes.home);
+                        },
+                        error: (message) {
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text(message)));
+                        },
+                      );
                     },
-                    error: (message) {
-                      // Show error message
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(message)));
-                    },
-                  );
-                },
-                builder: (context, state) {
-                  final isLoading = state.maybeWhen(
-                    loading: () => true,
-                    orElse: () => false,
-                  );
-                  return TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.blue,
-                      minimumSize: Size(double.infinity, 48.h),
-                    ),
-                    onPressed: isLoading
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<SignInCubit>().signIn(
-                                _emailController.text,
-                                _passwordController.text,
-                              );
-                            }
-                          },
-                    child: isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(
-                              top: 12,
-                              bottom: 12,
-                            ).r,
-                            child: Text(
-                              AppStrings.login,
-                              style: AppTextStyles.medium16.copyWith(
-                                color: AppColors.white,
+                    builder: (context, state) {
+                      final isLoading = state.maybeWhen(
+                        loading: () => true,
+                        orElse: () => false,
+                      );
+                      return TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: isFormValid
+                              ? AppColors.blue
+                              : AppColors.grey,
+                          minimumSize: Size(double.infinity, 48.h),
+                        ),
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<SignInCubit>().signIn(
+                                    _emailController.text,
+                                    _passwordController.text,
+                                    _rememberMe,
+                                  );
+                                }
+                              },
+                        child: isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 12,
+                                  bottom: 12,
+                                ).r,
+                                child: Text(
+                                  AppStrings.login,
+                                  style: AppTextStyles.medium16.copyWith(
+                                    color: AppColors.white,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                      );
+                    },
                   );
                 },
               ),

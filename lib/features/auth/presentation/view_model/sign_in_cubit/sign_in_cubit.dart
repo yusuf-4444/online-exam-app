@@ -10,12 +10,10 @@ class SignInCubit extends Cubit<SignInState> {
   final SignInUsecase signInUsecase;
   SignInCubit(this.signInUsecase) : super(const SignInState.initial());
 
-  void signIn(String email, String password) async {
+  void signIn(String email, String password, bool rememberMe) async {
     emit(const SignInState.loading());
 
-    await Future.delayed(const Duration(seconds: 2));
-
-    final response = await signInUsecase.call(email, password);
+    final response = await signInUsecase.call(email, password, rememberMe);
     switch (response) {
       case SuccessResponse<UserEntity>(:final data):
         emit(SignInState.success(data));
