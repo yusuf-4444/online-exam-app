@@ -4,6 +4,8 @@ import 'package:online_exam_app/features/auth/data/datasource/local/auth_local_d
 import 'package:online_exam_app/features/auth/data/datasource/remote/auth_remote_data_source.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
+import 'package:online_exam_app/features/auth/data/models/sign_up_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/sign_up_response_model.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
 import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
@@ -22,22 +24,27 @@ class AuthRepoImpl implements AuthRepo {
     final response = await remoteDataSource.login(requestModel);
     switch (response) {
       case SuccessResponse<SignInResponseModel>(:final data):
-        final userEntity = UserEntity(
-          id: data.user.id,
-          email: data.user.email,
-          username: data.user.username,
-          firstName: data.user.firstName,
-          lastName: data.user.lastName,
-          phone: data.user.phone,
-          role: data.user.role,
-          isVerified: data.user.isVerified,
-          createdAt: data.user.createdAt,
-        );
+        final userEntity = data.user.toDomain();
         if (rememberMe) {
           await localDataSource.saveToken(data.token);
         }
         return SuccessResponse(userEntity);
       case ErrorResponse<SignInResponseModel>(:final errMessage):
+        return ErrorResponse(errMessage: errMessage);
+    }
+  }
+
+  @override
+  Future<BaseResponse<UserEntity>> signUp(
+    SignUpRequestModel requestModel,
+  ) async {
+    final response = await remoteDataSource.signUp(requestModel);
+    switch (response) {
+      case SuccessResponse<SignUpResponseModel>(:final data):
+        final UserEntity userEntity = data.user.toDomain();
+        await localDataSource.saveToken(data.token);
+        return SuccessResponse(userEntity);
+      case ErrorResponse<SignUpResponseModel>(:final errMessage):
         return ErrorResponse(errMessage: errMessage);
     }
   }
