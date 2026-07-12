@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:go_router/go_router.dart';
 import 'package:online_exam_app/core/routing/app_routes.dart';
+import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
@@ -48,11 +49,12 @@ class SignInButton extends StatelessWidget {
               loading: () => true,
               orElse: () => false,
             );
-            return TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: isFormValid ? AppColors.blue : AppColors.grey,
-                minimumSize: Size(double.infinity, 48.h),
-              ),
+            return CustomTextButton(
+              formKey: formKey,
+              emailController: emailController,
+              passwordController: passwordController,
+              rememberMe: rememberMe,
+              color: isFormValid ? AppColors.blue : AppColors.grey,
               onPressed: isLoading
                   ? null
                   : () {
