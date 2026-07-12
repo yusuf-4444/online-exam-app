@@ -7,41 +7,43 @@ import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_state.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_state.dart';
 
-class SignInButton extends StatelessWidget {
-  const SignInButton({
+class SignUpButton extends StatelessWidget {
+  const SignUpButton({
     super.key,
     required this.formKey,
+    required this.usernameController,
+    required this.firstNameController,
+    required this.lastNameController,
     required this.emailController,
     required this.passwordController,
+    required this.phoneNumberController,
     required this.isFormValidNotifier,
-    required this.rememberMe,
   });
 
   final GlobalKey<FormState> formKey;
+  final TextEditingController usernameController;
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController phoneNumberController;
   final ValueNotifier<bool> isFormValidNotifier;
-  final bool rememberMe;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: isFormValidNotifier,
       builder: (context, isFormValid, child) {
-        return BlocConsumer<SignInCubit, SignInState>(
+        return BlocConsumer<SignUpCubit, SignUpState>(
           listener: (context, state) {
             state.whenOrNull(
-              success: (user) {
-                context.goNamed(AppRoutes.home);
-              },
-              error: (message) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(message)));
-              },
+              success: (user) => context.goNamed(AppRoutes.home),
+              error: (message) => ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(message))),
             );
           },
           builder: (context, state) {
@@ -55,10 +57,13 @@ class SignInButton extends StatelessWidget {
                   ? null
                   : () {
                       if (formKey.currentState!.validate()) {
-                        context.read<SignInCubit>().signIn(
+                        context.read<SignUpCubit>().signUp(
+                          usernameController.text,
+                          firstNameController.text,
+                          lastNameController.text,
                           emailController.text,
                           passwordController.text,
-                          rememberMe,
+                          phoneNumberController.text,
                         );
                       }
                     },
@@ -72,9 +77,9 @@ class SignInButton extends StatelessWidget {
                       ),
                     )
                   : Padding(
-                      padding: const EdgeInsets.only(top: 12, bottom: 12).r,
+                      padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
                       child: Text(
-                        AppStrings.login,
+                        AppStrings.signUp,
                         style: AppTextStyles.medium16.copyWith(
                           color: AppColors.white,
                         ),

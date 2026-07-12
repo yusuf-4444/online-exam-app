@@ -6,6 +6,7 @@ import 'package:online_exam_app/features/auth/presentation/view/forget_password_
 import 'package:online_exam_app/features/auth/presentation/view/sign_in_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_up_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart';
 import 'package:online_exam_app/features/splash/presentation/view/splash_view.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -28,7 +29,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/signUp',
       name: AppRoutes.signUp,
-      builder: (context, state) => const SignUpView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<SignUpCubit>(),
+        child: const SignUpView(),
+      ),
     ),
     GoRoute(
       path: '/forgotPassword',

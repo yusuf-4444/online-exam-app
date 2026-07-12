@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:online_exam_app/core/routing/app_routes.dart';
-import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/shared/custom_text_form_field.dart';
-import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
-import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/presentation/widgets/sign_up_already_have_account.dart';
+import 'package:online_exam_app/features/auth/presentation/widgets/sign_up_button.dart';
 
 class SignUpViewBody extends StatefulWidget {
   const SignUpViewBody({super.key});
@@ -158,52 +155,17 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
               onChanged: (_) => _validatForm(),
             ),
             Gap(48.h),
-            CustomTextButton(
+            SignUpButton(
               formKey: _formKey,
+              usernameController: _usernameController,
+              firstNameController: _firstNameController,
+              lastNameController: _lastNameController,
               emailController: _emailController,
               passwordController: _passwordController,
-              rememberMe: false,
-              color: _isFormValidNotifier.value
-                  ? AppColors.blue
-                  : AppColors.grey,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
-              },
-              child: Padding(
-                padding: EdgeInsets.only(top: 14.h, bottom: 14.h),
-                child: Text(
-                  AppStrings.signUp,
-                  style: AppTextStyles.medium16.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
+              phoneNumberController: _phoneNumberController,
+              isFormValidNotifier: _isFormValidNotifier,
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppStrings.alreadyHaveAccount,
-                  style: AppTextStyles.regular14.copyWith(
-                    color: AppColors.black,
-                  ),
-                ),
-                Gap(4.w),
-                InkWell(
-                  onTap: () {
-                    context.pushNamed(AppRoutes.signIn);
-                  },
-                  child: Text(
-                    AppStrings.signIn,
-                    style: AppTextStyles.regular14.copyWith(
-                      color: AppColors.blue,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            const SignUpAlreadyHaveAccount(),
           ],
         ),
       ),
