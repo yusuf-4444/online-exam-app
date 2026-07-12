@@ -18,9 +18,11 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<BaseResponse<UserEntity>> login(
-    SignInRequestModel requestModel,
+    String email,
+    String password,
     bool rememberMe,
   ) async {
+    final requestModel = SignInRequestModel(email: email, password: password);
     final response = await remoteDataSource.login(requestModel);
     switch (response) {
       case SuccessResponse<SignInResponseModel>(:final data):
@@ -35,9 +37,22 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<BaseResponse<UserEntity>> signUp(
-    SignUpRequestModel requestModel,
-  ) async {
+  Future<BaseResponse<UserEntity>> signUp({
+    required String userName,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String phoneNumber,
+  }) async {
+    final requestModel = SignUpRequestModel(
+      userName: userName,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+    );
     final response = await remoteDataSource.signUp(requestModel);
     switch (response) {
       case SuccessResponse<SignUpResponseModel>(:final data):

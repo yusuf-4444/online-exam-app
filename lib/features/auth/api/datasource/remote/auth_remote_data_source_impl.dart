@@ -20,7 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final response = await authApiClient.signIn(request: requestModel);
       return SuccessResponse(response);
     } catch (e) {
-      return ErrorResponse(error: e as Exception);
+      return ErrorResponse(error: e is Exception ? e : Exception(e.toString()));
     }
   }
 
@@ -32,7 +32,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final response = await authApiClient.signUp(request: requestModel);
       return SuccessResponse(response);
     } catch (e) {
-      return ErrorResponse(error: e as Exception);
+      return ErrorResponse(error: e is Exception ? e : Exception(e.toString()));
     }
   }
 }
