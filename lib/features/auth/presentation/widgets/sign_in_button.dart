@@ -8,6 +8,7 @@ import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_state.dart';
 
 class SignInButton extends StatelessWidget {
@@ -55,10 +56,12 @@ class SignInButton extends StatelessWidget {
                   ? null
                   : () {
                       if (formKey.currentState!.validate()) {
-                        context.read<SignInCubit>().signIn(
-                          emailController.text,
-                          passwordController.text,
-                          rememberMe,
+                        context.read<SignInCubit>().doEvent(
+                          SignInEvent(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            rememberMe: rememberMe,
+                          ),
                         );
                       }
                     },
