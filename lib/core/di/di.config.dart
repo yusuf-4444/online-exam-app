@@ -27,10 +27,10 @@ import '../../features/auth/data/repo/auth_repo_impl.dart' as _i984;
 import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
 import '../../features/auth/domain/usecases/sign_in_usecase.dart' as _i259;
 import '../../features/auth/domain/usecases/sign_up_usecase.dart' as _i860;
-import '../../features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart'
-    as _i715;
-import '../../features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart'
-    as _i97;
+import '../../features/auth/presentation/view_model/sign_in_bloc/sign_in_bloc.dart'
+    as _i105;
+import '../../features/auth/presentation/view_model/sign_up_bloc/sign_up_bloc.dart'
+    as _i955;
 import '../dio/dio_module.dart' as _i977;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -64,11 +64,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i860.SignUpUsecase>(
       () => _i860.SignUpUsecase(gh<_i170.AuthRepo>()),
     );
-    gh.factory<_i715.SignInCubit>(
-      () => _i715.SignInCubit(gh<_i259.SignInUsecase>()),
+    gh.factory<_i955.SignUpBloc>(
+      () => _i955.SignUpBloc(gh<_i860.SignUpUsecase>()),
     );
-    gh.factory<_i97.SignUpCubit>(
-      () => _i97.SignUpCubit(signUpUsecase: gh<_i860.SignUpUsecase>()),
+    gh.factory<_i105.SignInBloc>(
+      () => _i105.SignInBloc(gh<_i259.SignInUsecase>()),
     );
     return this;
   }

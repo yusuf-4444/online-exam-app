@@ -7,9 +7,9 @@ import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_intent.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_state.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_bloc.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_intent.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_state.dart';
 
 class SignInButton extends StatelessWidget {
   const SignInButton({
@@ -32,7 +32,7 @@ class SignInButton extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: isFormValidNotifier,
       builder: (context, isFormValid, child) {
-        return BlocConsumer<SignInCubit, SignInState>(
+        return BlocConsumer<SignInBloc, SignInState>(
           listener: (context, state) {
             state.whenOrNull(
               success: (user) {
@@ -56,7 +56,7 @@ class SignInButton extends StatelessWidget {
                   ? null
                   : () {
                       if (formKey.currentState!.validate()) {
-                        context.read<SignInCubit>().doEvent(
+                        context.read<SignInBloc>().add(
                           SignInEvent(
                             email: emailController.text,
                             password: passwordController.text,
