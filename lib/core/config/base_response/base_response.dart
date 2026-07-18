@@ -34,7 +34,10 @@ class ErrorResponse<T> extends BaseResponse<T> {
         case DioExceptionType.cancel:
           return 'Request was cancelled.';
         case DioExceptionType.badResponse:
-          return _mapStatusCodeToMessage(error.response?.statusCode);
+          final serverMessage = error.response?.data?['message'];
+          return serverMessage is String
+              ? serverMessage
+              : _mapStatusCodeToMessage(error.response?.statusCode);
         default:
           return 'Something went wrong, please check your connection.';
       }

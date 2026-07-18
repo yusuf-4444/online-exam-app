@@ -12,10 +12,15 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../features/auth/api/client/auth_api_client.dart' as _i213;
+import '../../features/auth/api/datasource/local/auth_local_data_source_impl.dart'
+    as _i485;
 import '../../features/auth/api/datasource/remote/auth_remote_data_source_impl.dart'
     as _i26;
+import '../../features/auth/data/datasource/local/auth_local_data_source.dart'
+    as _i201;
 import '../../features/auth/data/datasource/remote/auth_remote_data_source.dart'
     as _i47;
 import '../../features/auth/data/repo/auth_repo_impl.dart' as _i984;
@@ -32,6 +37,10 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
+    gh.singleton<_i528.PrettyDioLogger>(() => dioModule.addInterceptors());
+    gh.lazySingleton<_i201.AuthLocalDataSource>(
+      () => _i485.AuthLocalDataSourceImpl(),
+    );
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
     );
@@ -39,8 +48,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i26.AuthRemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
     );
     gh.lazySingleton<_i170.AuthRepo>(
-      () =>
-          _i984.AuthRepoImpl(remoteDataSource: gh<_i47.AuthRemoteDataSource>()),
+      () => _i984.AuthRepoImpl(
+        remoteDataSource: gh<_i47.AuthRemoteDataSource>(),
+        localDataSource: gh<_i201.AuthLocalDataSource>(),
+      ),
     );
     gh.lazySingleton<_i259.SignInUsecase>(
       () => _i259.SignInUsecase(gh<_i170.AuthRepo>()),

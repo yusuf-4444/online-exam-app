@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam_app/core/constants/api_endpoints.dart';
+import 'package:online_exam_app/features/auth/data/models/forgot_password_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/forgot_password_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
 import 'package:retrofit/error_logger.dart';
@@ -17,5 +19,10 @@ abstract class AuthApiClient {
   @POST(ApiEndpoints.signIn)
   Future<SignInResponseModel> signIn({
     @Body() required SignInRequestModel request,
+  });
+
+  @POST(ApiEndpoints.forgotPassword)
+  Future<ForgotPasswordResponseModel> forgotPassword({
+    @Body() required ForgotPasswordRequestModel request,
   });
 }
