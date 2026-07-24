@@ -24,7 +24,7 @@ class ForgotPasswordEmailField extends StatelessWidget {
           return AppStrings.emailRequired;
         }
         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-          return AppStrings.invalidEmail;
+          return AppStrings.thisEmailIsNotValid;
         }
         return null;
       },

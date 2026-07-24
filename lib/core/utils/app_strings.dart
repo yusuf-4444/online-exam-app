@@ -34,5 +34,5 @@ class AppStrings {
   static const String continueButton = "Continue";
   static const String pleaseEnterYourEmailAssociatedToYourAccount =
       "Please enter your email as associated to your account";
-
+  static const String thisEmailIsNotValid = "This Email is not valid";
 }

@@ -46,6 +46,7 @@ class CustomTextFormField extends StatelessWidget {
       focusNode: focusNode,
       style: AppTextStyles.regular14.copyWith(color: AppColors.black),
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         hintText: hintText,
         hintStyle: AppTextStyles.regular14.copyWith(
           color: AppColors.placeHolder,
