@@ -7,6 +7,7 @@ class AppStrings {
   static const String enterYourPassword = "Enter your password";
   static const String rememberMe = "Remember me";
   static const String forgetPassword = "Forget password?";
+  static const String forgotPassword = "Forgot password";
   static const String dontHaveAccount = "Don't have an account?";
   static const String signUp = "Sign up";
   static const String signIn = "Sign in";
@@ -30,4 +31,8 @@ class AppStrings {
   static const String phoneIsNotValid = "Phone number is not valid";
   static const String firstNameIsNotValid = "First name is not valid";
   static const String lastNameIsNotValid = "Last name is not valid";
+  static const String continueButton = "Continue";
+  static const String pleaseEnterYourEmailAssociatedToYourAccount =
+      "Please enter your email as associated to your account";
+
 }
