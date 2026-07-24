@@ -25,7 +25,11 @@ import '../../features/auth/data/datasource/remote/auth_remote_data_source.dart'
     as _i47;
 import '../../features/auth/data/repo/auth_repo_impl.dart' as _i984;
 import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
+import '../../features/auth/domain/usecases/forgot_password_usecase.dart'
+    as _i560;
 import '../../features/auth/domain/usecases/sign_in_usecase.dart' as _i259;
+import '../../features/auth/presentation/view_model/forgot_password_cubit/forgot_password_cubit.dart'
+    as _i638;
 import '../dio/dio_module.dart' as _i977;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -53,8 +57,14 @@ extension GetItInjectableX on _i174.GetIt {
         localDataSource: gh<_i201.AuthLocalDataSource>(),
       ),
     );
+    gh.lazySingleton<_i560.ForgotPasswordUseCase>(
+      () => _i560.ForgotPasswordUseCase(gh<_i170.AuthRepo>()),
+    );
     gh.lazySingleton<_i259.SignInUsecase>(
       () => _i259.SignInUsecase(gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i638.ForgotPasswordCubit>(
+      () => _i638.ForgotPasswordCubit(gh<_i560.ForgotPasswordUseCase>()),
     );
     return this;
   }
