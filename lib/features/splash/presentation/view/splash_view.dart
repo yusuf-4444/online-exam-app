@@ -19,12 +19,10 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> _checkAuth() async {
-    print('1- Before getToken');
     final token = await getIt<AuthLocalDataSource>().getToken().timeout(
       const Duration(seconds: 3),
       onTimeout: () => null,
     );
-    print('2- After getToken, token = $token');
     if (!mounted) return;
     if (token != null) {
       context.go(AppRoutes.home);

@@ -75,7 +75,7 @@ class SignUpButton extends StatelessWidget {
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
-                        color: Colors.white,
+                        color: AppColors.white,
                         strokeWidth: 2,
                       ),
                     )
