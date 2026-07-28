@@ -1,0 +1,106 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:online_exam_app/core/config/base_response/base_response.dart';
+import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
+import 'package:online_exam_app/features/auth/domain/usecases/sign_up_usecase.dart';
+
+import 'sign_in_usecase_test.dart';
+
+void main() {
+  late MockAuthRepo mockAuthRepo;
+  late SignUpUsecase signUpUsecase;
+
+  setUp(() {
+    mockAuthRepo = MockAuthRepo();
+    signUpUsecase = SignUpUsecase(mockAuthRepo);
+  });
+
+  group("SignUpUsecase", () {
+    final tUser = UserEntity(
+      id: '1',
+      username: 'yusuf',
+      firstName: 'Yusuf',
+      lastName: 'Mohamed',
+      email: 'yusuf@test.com',
+      phone: '01000000000',
+      role: 'student',
+      isVerified: true,
+      createdAt: '2026-01-01',
+    );
+    test("return SuccessResponse when signUp success", () async {
+      //arrange
+      when(
+        () => mockAuthRepo.signUp(
+          userName: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
+      ).thenAnswer((_) async => SuccessResponse(tUser));
+
+      //act
+      final result = await signUpUsecase.call(
+        "Yusuf",
+        "Yusuf",
+        "Mohamed",
+        "youssefhamed374@gmail.com",
+        "1234",
+        "1234",
+      );
+
+      //assert
+      expect(result, isA<SuccessResponse<UserEntity>>());
+      expect((result as SuccessResponse<UserEntity>).data, tUser);
+      verify(
+        () => mockAuthRepo.signUp(
+          userName: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
+      ).called(1);
+    });
+
+    test("return ErrorResponse when signUp failed", () async {
+      //arrange
+      when(
+        () => mockAuthRepo.signUp(
+          userName: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
+      ).thenAnswer((_) async => ErrorResponse(errMessage: "error"));
+
+      //act
+      final result = await signUpUsecase.call(
+        "Yusuf",
+        "Yusuf",
+        "Mohamed",
+        "youssefhamed374@gmail.com",
+        "1234",
+        "1234",
+      );
+
+      //assert
+      expect(result, isA<ErrorResponse<UserEntity>>());
+      expect((result as ErrorResponse<UserEntity>).errMessage, "error");
+      verify(
+        () => mockAuthRepo.signUp(
+          userName: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
+      ).called(1);
+    });
+  });
+}

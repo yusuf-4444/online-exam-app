@@ -25,13 +25,15 @@ class AuthRepoImpl implements AuthRepo {
     final requestModel = SignInRequestModel(email: email, password: password);
     final response = await remoteDataSource.login(requestModel);
     switch (response) {
-      case SuccessResponse<SignInResponseModel>(:final data):
+      case SuccessResponse<SignInResponseModel>():
+        final data = response.data;
         final userEntity = data.user.toDomain();
         if (rememberMe) {
           await localDataSource.saveToken(data.token);
         }
         return SuccessResponse(userEntity);
-      case ErrorResponse<SignInResponseModel>(:final errMessage):
+      case ErrorResponse<SignInResponseModel>():
+        final errMessage = response.errMessage;
         return ErrorResponse(errMessage: errMessage);
     }
   }
