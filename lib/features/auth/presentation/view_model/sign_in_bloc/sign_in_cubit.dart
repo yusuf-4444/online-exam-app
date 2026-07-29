@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam_app/core/config/base_response/base_response.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
@@ -22,39 +21,19 @@ import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bl
 //     }
 //   }
 // }
-// class SignInCubit extends Cubit<SignInState> {
-//   final SignInUsecase _signInUsecase;
-//   SignInCubit(this._signInUsecase) : super(const SignInState.initial());
-//   void doEvent(SignInIntent event) {
-//     switch (event) {
-//       case SignInEvent(:final email, :final password, :final rememberMe):
-//         _signIn(email, password, rememberMe);
-//     }
-//   }
-//   void _signIn(String email, String password, bool rememberMe) async {
-//     emit(const SignInState.loading());
-//     final response = await _signInUsecase.call(email, password, rememberMe);
-//     switch (response) {
-//       case SuccessResponse<UserEntity>(:final data):
-//         emit(SignInState.success(data));
-//       case ErrorResponse<UserEntity>(:final errMessage):
-//         emit(SignInState.error(errMessage));
-//     }
-//   }
-// }
-class SignInBloc extends Bloc<SignInIntent, SignInState> {
+class SignInCubit extends Cubit<SignInState> {
   final SignInUsecase _signInUsecase;
-  SignInBloc(this._signInUsecase) : super(const SignInState.initial()) {
-    on<SignInEvent>(_onSignIn, transformer: droppable());
+  SignInCubit(this._signInUsecase) : super(const SignInState.initial());
+  void doEvent(SignInIntent event) {
+    switch (event) {
+      case SignInEvent(:final email, :final password, :final rememberMe):
+        _signIn(email, password, rememberMe);
+    }
   }
 
-  Future<void> _onSignIn(SignInEvent evnet, Emitter<SignInState> emit) async {
+  void _signIn(String email, String password, bool rememberMe) async {
     emit(const SignInState.loading());
-    final response = await _signInUsecase.call(
-      evnet.email,
-      evnet.password,
-      evnet.rememberMe,
-    );
+    final response = await _signInUsecase.call(email, password, rememberMe);
     switch (response) {
       case SuccessResponse<UserEntity>(:final data):
         emit(SignInState.success(data));
@@ -63,3 +42,24 @@ class SignInBloc extends Bloc<SignInIntent, SignInState> {
     }
   }
 }
+// class SignInBloc extends Bloc<SignInIntent, SignInState> {
+//   final SignInUsecase _signInUsecase;
+//   SignInBloc(this._signInUsecase) : super(const SignInState.initial()) {
+//     on<SignInEvent>(_onSignIn, transformer: droppable());
+//   }
+
+//   Future<void> _onSignIn(SignInEvent evnet, Emitter<SignInState> emit) async {
+//     emit(const SignInState.loading());
+//     final response = await _signInUsecase.call(
+//       evnet.email,
+//       evnet.password,
+//       evnet.rememberMe,
+//     );
+//     switch (response) {
+//       case SuccessResponse<UserEntity>(:final data):
+//         emit(SignInState.success(data));
+//       case ErrorResponse<UserEntity>(:final errMessage):
+//         emit(SignInState.error(errMessage));
+//     }
+//   }
+// }

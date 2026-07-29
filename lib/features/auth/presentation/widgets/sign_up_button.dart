@@ -7,7 +7,7 @@ import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_bloc.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_state.dart';
 
@@ -38,7 +38,7 @@ class SignUpButton extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: isFormValidNotifier,
       builder: (context, isFormValid, child) {
-        return BlocConsumer<SignUpBloc, SignUpState>(
+        return BlocConsumer<SignUpCubit, SignUpState>(
           listener: (context, state) {
             state.whenOrNull(
               success: (user) => context.goNamed(AppRoutes.home),
@@ -58,7 +58,7 @@ class SignUpButton extends StatelessWidget {
                   ? null
                   : () {
                       if (formKey.currentState!.validate()) {
-                        context.read<SignUpBloc>().add(
+                        context.read<SignUpCubit>().doEvent(
                           SignUpEvent(
                             username: usernameController.text,
                             firstName: firstNameController.text,

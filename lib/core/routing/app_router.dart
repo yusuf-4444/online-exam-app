@@ -5,8 +5,8 @@ import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/features/auth/presentation/view/forget_password_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_in_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_up_view.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_bloc.dart';
-import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_bloc.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_cubit.dart';
 import 'package:online_exam_app/features/splash/presentation/view/splash_view.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -21,7 +21,7 @@ final GoRouter appRouter = GoRouter(
       path: '/signIn',
       name: AppRoutes.signIn,
       builder: (context, state) => BlocProvider(
-        create: (context) => getIt<SignInBloc>(),
+        create: (context) => getIt<SignInCubit>(),
         child: const SignInView(),
       ),
     ),
@@ -30,7 +30,7 @@ final GoRouter appRouter = GoRouter(
       path: '/signUp',
       name: AppRoutes.signUp,
       builder: (context, state) => BlocProvider(
-        create: (context) => getIt<SignUpBloc>(),
+        create: (context) => getIt<SignUpCubit>(),
         child: const SignUpView(),
       ),
     ),
