@@ -35,9 +35,11 @@ class SignInCubit extends Cubit<SignInState> {
     emit(const SignInState.loading());
     final response = await _signInUsecase.call(email, password, rememberMe);
     switch (response) {
-      case SuccessResponse<UserEntity>(:final data):
+      case SuccessResponse<UserEntity>():
+        final data = response.data;
         emit(SignInState.success(data));
-      case ErrorResponse<UserEntity>(:final errMessage):
+      case ErrorResponse<UserEntity>():
+        final errMessage = response.errMessage;
         emit(SignInState.error(errMessage));
     }
   }
