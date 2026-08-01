@@ -7,7 +7,7 @@ import 'package:online_exam_app/features/auth/data/models/sign_in_response_model
 import 'package:online_exam_app/features/auth/data/models/sign_up_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_up_response_model.dart';
 
-@LazySingleton(as: AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient authApiClient;
 

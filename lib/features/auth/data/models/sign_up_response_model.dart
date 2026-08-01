@@ -6,9 +6,9 @@ part 'sign_up_response_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SignUpResponseModel {
-  final String message;
-  final String token;
-  final UserModel user;
+  final String? message;
+  final String? token;
+  final UserModel? user;
 
   SignUpResponseModel({
     required this.message,
@@ -22,6 +22,6 @@ class SignUpResponseModel {
   Map<String, dynamic> toJson() => _$SignUpResponseModelToJson(this);
 
   SignUpEntity toEntity() {
-    return SignUpEntity(message: message, token: token, user: user.toDomain());
+    return SignUpEntity(message: message, token: token, user: user?.toDomain());
   }
 }

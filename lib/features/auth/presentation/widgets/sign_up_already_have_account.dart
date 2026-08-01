@@ -22,7 +22,7 @@ class SignUpAlreadyHaveAccount extends StatelessWidget {
         Gap(4.w),
         InkWell(
           onTap: () {
-            context.pushNamed(AppRoutes.signIn);
+            context.pop(AppRoutes.signIn);
           },
           child: Text(
             AppStrings.signIn,

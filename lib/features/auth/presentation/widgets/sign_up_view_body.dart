@@ -3,6 +3,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:online_exam_app/core/shared/custom_text_form_field.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
+import 'package:online_exam_app/core/utils/app_validators.dart';
 import 'package:online_exam_app/features/auth/presentation/widgets/sign_up_already_have_account.dart';
 import 'package:online_exam_app/features/auth/presentation/widgets/sign_up_button.dart';
 
@@ -31,7 +32,6 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -52,9 +52,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
           children: [
             Gap(24.h),
             CustomTextFormField(
-              validator: (value) => value == null || value.isEmpty
-                  ? AppStrings.userNameIsNotValid
-                  : null,
+              validator: (value) => AppValidators.username(value),
               controller: _usernameController,
               hintText: AppStrings.enterYourUsername,
               labelText: AppStrings.username,
@@ -65,9 +63,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
               children: [
                 Expanded(
                   child: CustomTextFormField(
-                    validator: (value) => value == null || value.isEmpty
-                        ? AppStrings.firstNameIsNotValid
-                        : null,
+                    validator: (value) => AppValidators.firstName(value),
                     controller: _firstNameController,
                     hintText: AppStrings.enterYourFirstName,
                     labelText: AppStrings.firstName,
@@ -77,9 +73,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                 Gap(17.w),
                 Expanded(
                   child: CustomTextFormField(
-                    validator: (value) => value == null || value.isEmpty
-                        ? AppStrings.lastNameIsNotValid
-                        : null,
+                    validator: (value) => AppValidators.lastName(value),
                     controller: _lastNameController,
                     hintText: AppStrings.enterYourLastName,
                     labelText: AppStrings.lastName,
@@ -90,9 +84,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
             ),
             Gap(24.h),
             CustomTextFormField(
-              validator: (value) => value == null || value.isEmpty
-                  ? AppStrings.invalidEmail
-                  : null,
+              validator: (value) => AppValidators.email(value),
               controller: _emailController,
               hintText: AppStrings.enterYourEmail,
               labelText: AppStrings.email,
@@ -108,15 +100,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     hintText: AppStrings.enterYourPassword,
                     labelText: AppStrings.password,
                     obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings.passwordRequired;
-                      }
-                      if (value.length < 6) {
-                        return AppStrings.invalidPassword;
-                      }
-                      return null;
-                    },
+                    validator: (value) => AppValidators.password(value),
                   ),
                 ),
                 Gap(17.w),
@@ -127,28 +111,17 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     hintText: AppStrings.enterYourConfirmPassword,
                     labelText: AppStrings.confirmPassword,
                     obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings.passwordRequired;
-                      }
-                      if (value.length < 6) {
-                        return AppStrings.invalidPassword;
-                      }
-                      if (value != _passwordController.text) {
-                        return AppStrings.passwordNotMatch;
-                      }
-
-                      return null;
-                    },
+                    validator: (value) => AppValidators.confirmPassword(
+                      value,
+                      _passwordController.text,
+                    ),
                   ),
                 ),
               ],
             ),
             Gap(24.h),
             CustomTextFormField(
-              validator: (value) => value == null || value.isEmpty
-                  ? AppStrings.phoneIsNotValid
-                  : null,
+              validator: (value) => AppValidators.phone(value),
               hintText: AppStrings.enterPhoneNumber,
               labelText: AppStrings.phoneNumber,
               controller: _phoneNumberController,

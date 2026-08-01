@@ -19,7 +19,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final ValueNotifier<bool> _isFormValidNotifier = ValueNotifier<bool>(false);
-  bool _rememberMe = false;
+  final bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -34,6 +34,8 @@ class _SignInViewBodyState extends State<SignInViewBody> {
     final isValid = _formKey.currentState?.validate() ?? false;
     _isFormValidNotifier.value = isValid;
   }
+
+  final ValueNotifier<bool> _rememberMeNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +60,16 @@ class _SignInViewBodyState extends State<SignInViewBody> {
 
               Gap(16.5.h),
 
-              SignInRemeberMe(
-                rememberMe: _rememberMe,
-                onChanged: (bool? value) {
-                  setState(() {
-                    _rememberMe = value ?? false;
-                  });
+              ValueListenableBuilder<bool>(
+                valueListenable: _rememberMeNotifier,
+                builder: (context, rememberMe, _) {
+                  return SignInRemeberMe(
+                    rememberMe: rememberMe,
+                    onChanged: (value) =>
+                        _rememberMeNotifier.value = value ?? false,
+                  );
                 },
               ),
-
               Gap(48.h),
 
               SignInButton(

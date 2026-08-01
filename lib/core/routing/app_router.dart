@@ -18,7 +18,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SplashView(),
     ),
     GoRoute(
-      path: '/signIn',
+      path: AppRoutes.signIn,
       name: AppRoutes.signIn,
       builder: (context, state) => BlocProvider(
         create: (context) => getIt<SignInCubit>(),
@@ -27,7 +27,7 @@ final GoRouter appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/signUp',
+      path: AppRoutes.signUp,
       name: AppRoutes.signUp,
       builder: (context, state) => BlocProvider(
         create: (context) => getIt<SignUpCubit>(),
@@ -35,7 +35,7 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/forgotPassword',
+      path: AppRoutes.forgotPassword,
       name: AppRoutes.forgotPassword,
       builder: (context, state) => const ForgetPasswordView(),
     ),

@@ -1,9 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam_app/core/config/base_response/base_response.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_up_params.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
 import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
-@lazySingleton
+@injectable
 class SignUpUsecase {
   final AuthRepo authRepo;
 
@@ -18,12 +19,14 @@ class SignUpUsecase {
     String phoneNumber,
   ) async {
     final response = await authRepo.signUp(
-      userName: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phoneNumber: phoneNumber,
+      SignUpParams(
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+      ),
     );
     return response;
   }

@@ -8,6 +8,8 @@ import 'package:online_exam_app/features/auth/data/models/sign_in_response_model
 import 'package:online_exam_app/features/auth/data/models/sign_up_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_up_response_model.dart';
 import 'package:online_exam_app/features/auth/data/repo/auth_repo_impl.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_in_params.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_up_params.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
 
 class MockAuthRemoteDataSource extends Mock implements AuthRemoteDataSource {}
@@ -80,9 +82,11 @@ void main() {
 
         //act
         final result = await authRepoImpl.login(
-          tSignInRequestModel.email,
-          tSignInRequestModel.password,
-          true,
+          SignInParams(
+            email: tSignInRequestModel.email,
+            password: tSignInRequestModel.password,
+            rememberMe: true,
+          ),
         );
 
         //assert
@@ -103,9 +107,11 @@ void main() {
 
         //act
         final result = await authRepoImpl.login(
-          tSignInRequestModel.email,
-          tSignInRequestModel.password,
-          false,
+          SignInParams(
+            email: tSignInRequestModel.email,
+            password: tSignInRequestModel.password,
+            rememberMe: false,
+          ),
         );
 
         //assert
@@ -123,9 +129,11 @@ void main() {
 
       //act
       final result = await authRepoImpl.login(
-        "youssef@error.com",
-        "1234",
-        false,
+        SignInParams(
+          email: "youssef@error.com",
+          password: "1234",
+          rememberMe: false,
+        ),
       );
 
       //assert
@@ -178,12 +186,14 @@ void main() {
 
         //act
         final result = await authRepoImpl.signUp(
-          userName: tSignUpRequestModel.userName,
-          firstName: tSignUpRequestModel.firstName,
-          lastName: tSignUpRequestModel.lastName,
-          email: tSignUpRequestModel.email,
-          password: tSignUpRequestModel.password,
-          phoneNumber: tSignUpRequestModel.phoneNumber,
+          SignUpParams(
+            username: tSignUpRequestModel.userName,
+            firstName: tSignUpRequestModel.firstName,
+            lastName: tSignUpRequestModel.lastName,
+            email: tSignUpRequestModel.email,
+            password: tSignUpRequestModel.password,
+            phoneNumber: tSignUpRequestModel.phoneNumber,
+          ),
         );
 
         //assert
@@ -202,12 +212,14 @@ void main() {
         ).thenAnswer((_) async => ErrorResponse(errMessage: "error"));
         //act
         final result = await authRepoImpl.signUp(
-          userName: tSignUpRequestModel.userName,
-          firstName: tSignUpRequestModel.firstName,
-          lastName: tSignUpRequestModel.lastName,
-          email: tSignUpRequestModel.email,
-          password: tSignUpRequestModel.password,
-          phoneNumber: tSignUpRequestModel.phoneNumber,
+          SignUpParams(
+            username: tSignUpRequestModel.userName,
+            firstName: tSignUpRequestModel.firstName,
+            lastName: tSignUpRequestModel.lastName,
+            email: tSignUpRequestModel.email,
+            password: tSignUpRequestModel.password,
+            phoneNumber: tSignUpRequestModel.phoneNumber,
+          ),
         );
 
         //assert

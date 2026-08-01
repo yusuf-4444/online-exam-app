@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:online_exam_app/core/config/base_response/base_response.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
-import 'package:online_exam_app/features/auth/domain/usecases/sign_in_usecase.dart';
+import 'package:online_exam_app/features/auth/domain/usecases/sign_in_use_case.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_state.dart';

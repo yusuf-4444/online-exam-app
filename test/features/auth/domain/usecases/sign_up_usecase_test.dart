@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:online_exam_app/core/config/base_response/base_response.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_up_params.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
-import 'package:online_exam_app/features/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:online_exam_app/features/auth/domain/usecases/sign_up_use_case.dart';
 
 import 'sign_in_usecase_test.dart';
 
@@ -31,12 +32,14 @@ void main() {
       //arrange
       when(
         () => mockAuthRepo.signUp(
-          userName: "Yusuf",
-          firstName: "Yusuf",
-          lastName: "Mohamed",
-          email: "youssefhamed374@gmail.com",
-          password: "1234",
-          phoneNumber: "1234",
+          SignUpParams(
+            username: "Yusuf",
+            firstName: "Yusuf",
+            lastName: "Mohamed",
+            email: "youssefhamed374@gmail.com",
+            password: "1234",
+            phoneNumber: "1234",
+          ),
         ),
       ).thenAnswer((_) async => SuccessResponse(tUser));
 
@@ -55,12 +58,14 @@ void main() {
       expect((result as SuccessResponse<UserEntity>).data, tUser);
       verify(
         () => mockAuthRepo.signUp(
-          userName: "Yusuf",
-          firstName: "Yusuf",
-          lastName: "Mohamed",
-          email: "youssefhamed374@gmail.com",
-          password: "1234",
-          phoneNumber: "1234",
+          SignUpParams(
+            username: "Yusuf",
+            firstName: "Yusuf",
+            lastName: "Mohamed",
+            email: "youssefhamed374@gmail.com",
+            password: "1234",
+            phoneNumber: "1234",
+          ),
         ),
       ).called(1);
     });
@@ -69,12 +74,14 @@ void main() {
       //arrange
       when(
         () => mockAuthRepo.signUp(
-          userName: "Yusuf",
-          firstName: "Yusuf",
-          lastName: "Mohamed",
-          email: "youssefhamed374@gmail.com",
-          password: "1234",
-          phoneNumber: "1234",
+          SignUpParams(
+            username: "Yusuf",
+            firstName: "Yusuf",
+            lastName: "Mohamed",
+            email: "youssefhamed374@gmail.com",
+            password: "1234",
+            phoneNumber: "1234",
+          ),
         ),
       ).thenAnswer((_) async => ErrorResponse(errMessage: "error"));
 
@@ -93,12 +100,14 @@ void main() {
       expect((result as ErrorResponse<UserEntity>).errMessage, "error");
       verify(
         () => mockAuthRepo.signUp(
-          userName: "Yusuf",
-          firstName: "Yusuf",
-          lastName: "Mohamed",
-          email: "youssefhamed374@gmail.com",
-          password: "1234",
-          phoneNumber: "1234",
+          SignUpParams(
+            username: "Yusuf",
+            firstName: "Yusuf",
+            lastName: "Mohamed",
+            email: "youssefhamed374@gmail.com",
+            password: "1234",
+            phoneNumber: "1234",
+          ),
         ),
       ).called(1);
     });

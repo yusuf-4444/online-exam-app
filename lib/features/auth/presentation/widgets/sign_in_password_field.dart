@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:online_exam_app/core/shared/custom_text_form_field.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
+import 'package:online_exam_app/core/utils/app_validators.dart';
 
 class SignInPasswordField extends StatelessWidget {
   const SignInPasswordField({
@@ -18,15 +19,7 @@ class SignInPasswordField extends StatelessWidget {
       hintText: AppStrings.enterYourPassword,
       labelText: AppStrings.password,
       obscureText: true,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return AppStrings.passwordRequired;
-        }
-        if (value.length < 6) {
-          return AppStrings.invalidPassword;
-        }
-        return null;
-      },
+      validator: (value) => AppValidators.password(value),
       controller: _passwordController,
     );
   }

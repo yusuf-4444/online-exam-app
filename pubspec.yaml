@@ -33,6 +33,7 @@ dependencies:
   bloc_test: ^10.0.0
   cupertino_icons: ^1.0.8
   dio: ^5.10.0
+  equatable: ^2.1.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
