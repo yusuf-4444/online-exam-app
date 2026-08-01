@@ -8,7 +8,7 @@ import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bl
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_state.dart';
 
-class MockSignInUsecase extends Mock implements SignInUsecase {}
+class MockSignInUsecase extends Mock implements SignInUseCase {}
 
 void main() {
   late MockSignInUsecase mockSignInUsecase;
@@ -16,7 +16,7 @@ void main() {
     mockSignInUsecase = MockSignInUsecase();
   });
 
-  final tUser = UserEntity(
+  const tUser = UserEntity(
     id: '1',
     username: 'yusuf',
     firstName: 'Yusuf',
@@ -33,13 +33,16 @@ void main() {
     build: () {
       when(
         () => mockSignInUsecase.call(any(), any(), any()),
-      ).thenAnswer((_) async => SuccessResponse(tUser));
+      ).thenAnswer((_) async => const SuccessResponse(tUser));
       return SignInCubit(mockSignInUsecase);
     },
     act: (cubit) => cubit.doEvent(
       SignInEvent(email: "yusuf@test.com", password: "1234", rememberMe: true),
     ),
-    expect: () => [const SignInState.loading(), SignInState.success(tUser)],
+    expect: () => [
+      const SignInState.loading(),
+      const SignInState.success(tUser),
+    ],
     verify: (_) {
       verify(
         () => mockSignInUsecase.call('yusuf@test.com', '1234', true),

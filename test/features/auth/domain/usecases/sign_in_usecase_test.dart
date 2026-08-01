@@ -10,15 +10,15 @@ class MockAuthRepo extends Mock implements AuthRepo {}
 
 void main() {
   late MockAuthRepo mockAuthRepo;
-  late SignInUsecase signInUsecase;
+  late SignInUseCase signInUsecase;
 
   setUp(() {
     mockAuthRepo = MockAuthRepo();
-    signInUsecase = SignInUsecase(mockAuthRepo);
+    signInUsecase = SignInUseCase(mockAuthRepo);
   });
 
   group("SignInUsecase", () {
-    final tUser = UserEntity(
+    const tUser = UserEntity(
       id: '1',
       username: 'yusuf',
       firstName: 'Yusuf',
@@ -40,7 +40,7 @@ void main() {
             rememberMe: true,
           ),
         ),
-      ).thenAnswer((_) async => SuccessResponse(tUser));
+      ).thenAnswer((_) async => const SuccessResponse(tUser));
 
       //Act
       final result = await signInUsecase.call("yusuf@test.com", "1234", true);

@@ -8,7 +8,7 @@ import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bl
 
 @injectable
 class SignUpCubit extends Cubit<SignUpState> {
-  final SignUpUsecase _signUpUsecase;
+  final SignUpUseCase _signUpUsecase;
   SignUpCubit({required this._signUpUsecase})
     : super(const SignUpState.initial());
 

@@ -9,11 +9,11 @@ import 'sign_in_usecase_test.dart';
 
 void main() {
   late MockAuthRepo mockAuthRepo;
-  late SignUpUsecase signUpUsecase;
+  late SignUpUseCase signUpUsecase;
 
   setUp(() {
     mockAuthRepo = MockAuthRepo();
-    signUpUsecase = SignUpUsecase(mockAuthRepo);
+    signUpUsecase = SignUpUseCase(mockAuthRepo);
   });
 
   group("SignUpUsecase", () {

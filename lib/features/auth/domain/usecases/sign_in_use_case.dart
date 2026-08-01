@@ -5,10 +5,10 @@ import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
 import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
 @injectable
-class SignInUsecase {
+class SignInUseCase {
   final AuthRepo authRepo;
 
-  SignInUsecase(this.authRepo);
+  SignInUseCase(this.authRepo);
   Future<BaseResponse<UserEntity>> call(
     String email,
     String password,

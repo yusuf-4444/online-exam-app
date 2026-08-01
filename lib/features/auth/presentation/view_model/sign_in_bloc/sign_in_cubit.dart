@@ -8,7 +8,7 @@ import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bl
 
 @injectable
 class SignInCubit extends Cubit<SignInState> {
-  final SignInUsecase _signInUsecase;
+  final SignInUseCase _signInUsecase;
   SignInCubit(this._signInUsecase) : super(const SignInState.initial());
   void doEvent(SignInIntent event) {
     switch (event) {
