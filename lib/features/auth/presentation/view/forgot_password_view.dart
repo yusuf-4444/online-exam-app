@@ -18,7 +18,7 @@ class ForgetPasswordView extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
         ),
         titleSpacing: 0,
-        title: Text(AppStrings.forgotPassword, style: AppTextStyles.medium20),
+        title: Text(AppStrings.password, style: AppTextStyles.medium20),
         centerTitle: false,
       ),
       body: const ForgotPasswordViewBody(),

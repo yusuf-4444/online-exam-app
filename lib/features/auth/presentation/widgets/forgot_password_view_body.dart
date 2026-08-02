@@ -40,7 +40,7 @@ class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
           child: Column(
             children: [
               Gap(40.h),
-              Text(AppStrings.forgotPassword, style: AppTextStyles.medium18),
+              Text(AppStrings.forgetPasswordTitle, style: AppTextStyles.medium18),
               Gap(16.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30).w,
