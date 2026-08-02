@@ -6,6 +6,7 @@ import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_in_params.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_bloc/sign_in_state.dart';
@@ -60,9 +61,11 @@ class SignInButton extends StatelessWidget {
                       if (formKey.currentState!.validate()) {
                         context.read<SignInCubit>().doEvent(
                           SignInEvent(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            rememberMe: rememberMe,
+                            params: SignInParams(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              rememberMe: rememberMe,
+                            ),
                           ),
                         );
                       }

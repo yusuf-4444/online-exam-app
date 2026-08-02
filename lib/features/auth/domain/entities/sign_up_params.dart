@@ -1,4 +1,6 @@
-class SignUpParams {
+import 'package:equatable/equatable.dart';
+
+class SignUpParams extends Equatable {
   final String username;
   final String firstName;
   final String lastName;
@@ -6,7 +8,7 @@ class SignUpParams {
   final String password;
   final String phoneNumber;
 
-  SignUpParams({
+  const SignUpParams({
     required this.username,
     required this.firstName,
     required this.lastName,
@@ -14,4 +16,14 @@ class SignUpParams {
     required this.password,
     required this.phoneNumber,
   });
+
+  @override
+  List<Object?> get props => [
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+    phoneNumber,
+  ];
 }

@@ -10,24 +10,8 @@ class SignUpUseCase {
 
   SignUpUseCase(this.authRepo);
 
-  Future<BaseResponse<UserEntity>> call(
-    String username,
-    String firstName,
-    String lastName,
-    String email,
-    String password,
-    String phoneNumber,
-  ) async {
-    final response = await authRepo.signUp(
-      SignUpParams(
-        username: username,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        phoneNumber: phoneNumber,
-      ),
-    );
+  Future<BaseResponse<UserEntity>> call(SignUpParams params) async {
+    final response = await authRepo.signUp(params);
     return response;
   }
 }

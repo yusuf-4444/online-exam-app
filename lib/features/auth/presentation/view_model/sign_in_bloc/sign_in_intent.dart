@@ -1,12 +1,8 @@
+import 'package:online_exam_app/features/auth/domain/entities/sign_in_params.dart';
+
 sealed class SignInIntent {}
 
 class SignInEvent extends SignInIntent {
-  final String email;
-  final String password;
-  final bool rememberMe;
-  SignInEvent({
-    required this.email,
-    required this.password,
-    required this.rememberMe,
-  });
+  SignInParams params;
+  SignInEvent({required this.params});
 }

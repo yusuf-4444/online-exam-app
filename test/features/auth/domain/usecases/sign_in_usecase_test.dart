@@ -17,6 +17,12 @@ void main() {
     signInUsecase = SignInUseCase(mockAuthRepo);
   });
 
+  setUpAll(() {
+    registerFallbackValue(
+      const SignInParams(email: '', password: '', rememberMe: false),
+    );
+  });
+
   group("SignInUsecase", () {
     const tUser = UserEntity(
       id: '1',
@@ -34,7 +40,7 @@ void main() {
       //Arrange
       when(
         () => mockAuthRepo.login(
-          SignInParams(
+          const SignInParams(
             email: "yusuf@test.com",
             password: "1234",
             rememberMe: true,
@@ -43,14 +49,20 @@ void main() {
       ).thenAnswer((_) async => const SuccessResponse(tUser));
 
       //Act
-      final result = await signInUsecase.call("yusuf@test.com", "1234", true);
+      final result = await signInUsecase.call(
+        const SignInParams(
+          email: "yusuf@test.com",
+          password: "1234",
+          rememberMe: true,
+        ),
+      );
 
       //Assert
       expect(result, isA<SuccessResponse<UserEntity>>());
       expect((result as SuccessResponse<UserEntity>).data, tUser);
       verify(
         () => mockAuthRepo.login(
-          SignInParams(
+          const SignInParams(
             email: "yusuf@test.com",
             password: "1234",
             rememberMe: true,
@@ -63,7 +75,7 @@ void main() {
       //Arrange
       when(
         () => mockAuthRepo.login(
-          SignInParams(
+          const SignInParams(
             email: "yusuf@error.com",
             password: "123",
             rememberMe: true,
@@ -72,14 +84,20 @@ void main() {
       ).thenAnswer((_) async => ErrorResponse(errMessage: "error"));
 
       //Act
-      final result = await signInUsecase.call("yusuf@error.com", "123", true);
+      final result = await signInUsecase.call(
+        const SignInParams(
+          email: "yusuf@error.com",
+          password: "123",
+          rememberMe: true,
+        ),
+      );
 
       //Assert
       expect(result, isA<ErrorResponse<UserEntity>>());
       expect((result as ErrorResponse<UserEntity>).errMessage, "error");
       verify(
         () => mockAuthRepo.login(
-          SignInParams(
+          const SignInParams(
             email: "yusuf@error.com",
             password: "123",
             rememberMe: true,

@@ -16,6 +16,19 @@ void main() {
     signUpUsecase = SignUpUseCase(mockAuthRepo);
   });
 
+  setUpAll(() {
+    registerFallbackValue(
+      const SignUpParams(
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+      ),
+    );
+  });
+
   group("SignUpUsecase", () {
     const tUser = UserEntity(
       id: '1',
@@ -32,7 +45,7 @@ void main() {
       //arrange
       when(
         () => mockAuthRepo.signUp(
-          SignUpParams(
+          const SignUpParams(
             username: "Yusuf",
             firstName: "Yusuf",
             lastName: "Mohamed",
@@ -41,16 +54,18 @@ void main() {
             phoneNumber: "1234",
           ),
         ),
-      ).thenAnswer((_) async => SuccessResponse(tUser));
+      ).thenAnswer((_) async => const SuccessResponse(tUser));
 
       //act
       final result = await signUpUsecase.call(
-        "Yusuf",
-        "Yusuf",
-        "Mohamed",
-        "youssefhamed374@gmail.com",
-        "1234",
-        "1234",
+        const SignUpParams(
+          username: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
       );
 
       //assert
@@ -58,7 +73,7 @@ void main() {
       expect((result as SuccessResponse<UserEntity>).data, tUser);
       verify(
         () => mockAuthRepo.signUp(
-          SignUpParams(
+          const SignUpParams(
             username: "Yusuf",
             firstName: "Yusuf",
             lastName: "Mohamed",
@@ -74,7 +89,7 @@ void main() {
       //arrange
       when(
         () => mockAuthRepo.signUp(
-          SignUpParams(
+          const SignUpParams(
             username: "Yusuf",
             firstName: "Yusuf",
             lastName: "Mohamed",
@@ -87,12 +102,14 @@ void main() {
 
       //act
       final result = await signUpUsecase.call(
-        "Yusuf",
-        "Yusuf",
-        "Mohamed",
-        "youssefhamed374@gmail.com",
-        "1234",
-        "1234",
+        const SignUpParams(
+          username: "Yusuf",
+          firstName: "Yusuf",
+          lastName: "Mohamed",
+          email: "youssefhamed374@gmail.com",
+          password: "1234",
+          phoneNumber: "1234",
+        ),
       );
 
       //assert
@@ -100,7 +117,7 @@ void main() {
       expect((result as ErrorResponse<UserEntity>).errMessage, "error");
       verify(
         () => mockAuthRepo.signUp(
-          SignUpParams(
+          const SignUpParams(
             username: "Yusuf",
             firstName: "Yusuf",
             lastName: "Mohamed",

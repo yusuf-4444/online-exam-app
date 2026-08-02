@@ -9,14 +9,8 @@ class SignInUseCase {
   final AuthRepo authRepo;
 
   SignInUseCase(this.authRepo);
-  Future<BaseResponse<UserEntity>> call(
-    String email,
-    String password,
-    bool rememberMe,
-  ) async {
-    final response = await authRepo.login(
-      SignInParams(email: email, password: password, rememberMe: rememberMe),
-    );
+  Future<BaseResponse<UserEntity>> call(SignInParams params) async {
+    final response = await authRepo.login(params);
     return response;
   }
 }

@@ -6,6 +6,7 @@ import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/domain/entities/sign_up_params.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_bloc/sign_up_state.dart';
@@ -62,12 +63,14 @@ class SignUpButton extends StatelessWidget {
                       if (formKey.currentState!.validate()) {
                         context.read<SignUpCubit>().doEvent(
                           SignUpEvent(
-                            username: usernameController.text,
-                            firstName: firstNameController.text,
-                            lastName: lastNameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            phoneNumber: phoneNumberController.text,
+                            params: SignUpParams(
+                              username: usernameController.text,
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              phoneNumber: phoneNumberController.text,
+                            ),
                           ),
                         );
                       }
