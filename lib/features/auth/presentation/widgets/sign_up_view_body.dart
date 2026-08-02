@@ -52,7 +52,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
           children: [
             Gap(24.h),
             CustomTextFormField(
-              validator: (value) => AppValidators.username(value),
+              validator: AppValidators.username,
               controller: _usernameController,
               hintText: AppStrings.enterYourUsername,
               labelText: AppStrings.username,
@@ -100,7 +100,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     hintText: AppStrings.enterYourPassword,
                     labelText: AppStrings.password,
                     obscureText: true,
-                    validator: (value) => AppValidators.password(value),
+                    validator: AppValidators.password,
                   ),
                 ),
                 Gap(17.w),
@@ -111,17 +111,17 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     hintText: AppStrings.enterYourConfirmPassword,
                     labelText: AppStrings.confirmPassword,
                     obscureText: true,
-                    validator: (value) => AppValidators.confirmPassword(
-                      value,
+                    validator: ((value) => AppValidators.confirmPassword(
+                      _confirmPasswordController.text,
                       _passwordController.text,
-                    ),
+                    )),
                   ),
                 ),
               ],
             ),
             Gap(24.h),
             CustomTextFormField(
-              validator: (value) => AppValidators.phone(value),
+              validator: AppValidators.phone,
               hintText: AppStrings.enterPhoneNumber,
               labelText: AppStrings.phoneNumber,
               controller: _phoneNumberController,

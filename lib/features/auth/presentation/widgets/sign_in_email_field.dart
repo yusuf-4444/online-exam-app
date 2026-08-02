@@ -20,7 +20,7 @@ class SignInEmailField extends StatelessWidget {
       hintText: AppStrings.enterYourEmail,
       labelText: AppStrings.email,
       controller: emailController,
-      validator: (value) => AppValidators.email(value),
+      validator: AppValidators.email,
     );
   }
 }

@@ -17,7 +17,7 @@ void main() {
   });
 
   group("SignUpUsecase", () {
-    final tUser = UserEntity(
+    const tUser = UserEntity(
       id: '1',
       username: 'yusuf',
       firstName: 'Yusuf',

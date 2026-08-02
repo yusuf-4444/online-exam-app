@@ -43,6 +43,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
       padding: const EdgeInsets.only(left: 16, right: 16).r,
       child: SingleChildScrollView(
         child: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(
             children: [

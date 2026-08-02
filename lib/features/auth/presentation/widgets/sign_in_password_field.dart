@@ -19,7 +19,7 @@ class SignInPasswordField extends StatelessWidget {
       hintText: AppStrings.enterYourPassword,
       labelText: AppStrings.password,
       obscureText: true,
-      validator: (value) => AppValidators.password(value),
+      validator: AppValidators.password,
       controller: _passwordController,
     );
   }
