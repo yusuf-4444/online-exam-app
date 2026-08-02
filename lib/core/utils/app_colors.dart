@@ -6,4 +6,5 @@ abstract class AppColors {
   static const Color blue = Color(0xFF02369C);
   static const Color placeHolder = Color(0xFFA6A6A6);
   static const Color grey = Color(0xFF535353);
+  static const Color red = Color(0xFFE74C3C);
 }

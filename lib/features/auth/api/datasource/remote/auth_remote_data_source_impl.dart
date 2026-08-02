@@ -4,8 +4,10 @@ import 'package:online_exam_app/features/auth/api/client/auth_api_client.dart';
 import 'package:online_exam_app/features/auth/data/datasource/remote/auth_remote_data_source.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
+import 'package:online_exam_app/features/auth/data/models/sign_up_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/sign_up_response_model.dart';
 
-@LazySingleton(as: AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient authApiClient;
 
@@ -18,7 +20,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final response = await authApiClient.signIn(request: requestModel);
       return SuccessResponse(response);
     } catch (e) {
-      return ErrorResponse(error: e as Exception);
+      return ErrorResponse(error: e is Exception ? e : Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<BaseResponse<SignUpResponseModel>> signUp(
+    SignUpRequestModel requestModel,
+  ) async {
+    try {
+      final response = await authApiClient.signUp(request: requestModel);
+      return SuccessResponse(response);
+    } catch (e) {
+      return ErrorResponse(error: e is Exception ? e : Exception(e.toString()));
     }
   }
 }
