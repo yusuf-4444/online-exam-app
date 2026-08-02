@@ -5,7 +5,10 @@ import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/features/auth/presentation/view/forgot_password_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_in_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_up_view.dart';
+import 'package:online_exam_app/features/auth/presentation/view/verify_otp_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/forgot_password_cubit/forgot_password_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/verify_otp_cubit/verify_otp_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/widgets/verify_otp_view_body.dart';
 
 // import 'package:online_exam_app/features/auth/presentation/view_model/sign_in_cubit/sign_in_cubit.dart';
 // import 'package:online_exam_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart';
@@ -44,5 +47,19 @@ final GoRouter appRouter = GoRouter(
         child: const ForgetPasswordView(),
       ),
     ),
+    GoRoute(
+      path: '/verifyOtp',
+      name: AppRoutes.verifyOtp,
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<VerifyOtpCubit>(),
+        child: VerifyOtpView(email: state.extra as String),
+      ),
+    ),
+
+    // GoRoute(
+    //   path: '/resetPassword',
+    //   name: AppRoutes.resetPassword,
+    //   builder: (context, state) => const ResetPasswordView(),
+    // ),
   ],
 );
