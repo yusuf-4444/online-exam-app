@@ -6,8 +6,11 @@ import 'package:online_exam_app/features/auth/data/models/forgot_password_reques
 import 'package:online_exam_app/features/auth/data/models/forgot_password_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
+import 'package:online_exam_app/features/auth/data/models/verify_otp_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/verify_otp_response_model.dart';
 import 'package:online_exam_app/features/auth/domain/entities/forgot_password_entity.dart';
 import 'package:online_exam_app/features/auth/domain/entities/user_entity.dart';
+import 'package:online_exam_app/features/auth/domain/entities/verify_otp_entity.dart';
 import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
 @LazySingleton(as: AuthRepo)
@@ -48,6 +51,21 @@ class AuthRepoImpl implements AuthRepo {
         final forgotPasswordEntity = data.toDomain();
         return SuccessResponse(forgotPasswordEntity);
       case ErrorResponse<ForgotPasswordResponseModel>(:final errMessage):
+        return ErrorResponse(errMessage: errMessage);
+    }
+  }
+
+  @override
+  Future<BaseResponse<VerifyOtpEntity>> verifyResetCode(
+    String resetCode,
+  ) async {
+    final requestModel = VerifyOtpRequestModel(resetCode: resetCode);
+    final response = await remoteDataSource.verifyResetCode(requestModel);
+    switch (response) {
+      case SuccessResponse<VerifyOtpResponseModel>(:final data):
+        final verifyOtpEntity = data.toDomain();
+        return SuccessResponse(verifyOtpEntity);
+      case ErrorResponse<VerifyOtpResponseModel>(:final errMessage):
         return ErrorResponse(errMessage: errMessage);
     }
   }
