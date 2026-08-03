@@ -129,7 +129,7 @@ void main() {
 
       //act
       final result = await authRepoImpl.login(
-        SignInParams(
+        const SignInParams(
           email: "youssef@error.com",
           password: "1234",
           rememberMe: false,
