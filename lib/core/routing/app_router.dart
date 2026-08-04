@@ -3,10 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:online_exam_app/core/di/di.dart';
 import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/features/auth/presentation/view/forgot_password_view.dart';
+import 'package:online_exam_app/features/auth/presentation/view/reset_password_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_in_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/sign_up_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view/verify_otp_view.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/forgot_password_cubit/forgot_password_cubit.dart';
+import 'package:online_exam_app/features/auth/presentation/view_model/reset_password_cubit/reset_password_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/verify_otp_cubit/verify_otp_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/widgets/verify_otp_view_body.dart';
 
@@ -56,10 +58,13 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
 
-    // GoRoute(
-    //   path: '/resetPassword',
-    //   name: AppRoutes.resetPassword,
-    //   builder: (context, state) => const ResetPasswordView(),
-    // ),
+    GoRoute(
+      path: '/resetPassword',
+      name: AppRoutes.resetPassword,
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<ResetPasswordCubit>(),
+        child: ResetPasswordView(email: state.extra as String),
+      ),
+    ),
   ],
 );

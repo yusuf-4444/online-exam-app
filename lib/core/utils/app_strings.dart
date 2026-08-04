@@ -34,11 +34,20 @@ class AppStrings {
   static const String continueButton = "Continue";
   static const String pleaseEnterYourEmailAssociatedToYourAccount =
       "Please enter your email as associated to your account";
-  static const String sendOtp = "Please enter your code that send to your email address";
+  static const String sendOtp =
+      "Please enter your code that send to your email address";
   static const String thisEmailIsNotValid = "This Email is not valid";
   static const String emailVerification = "Email verification";
   static const didntReceiveCode = "Didn't receive code?";
   static const resend = "Resend";
   static const invalidCode = "Invalid code";
+  static const resetPasswordTitle = "Reset password";
+  static const resetPasswordDescription =
+      "Password must not be empty and must contain 6 characters with upper case letter and one number at least";
+  static const newPassword = "New password";
+  static const enterNewPassword = "Enter new password";
+  static const passwordMustBeAtLeast6Characters = "Password must be at least 6 characters";
+  static const passwordNotMatched = "Password not matched";
+  static const confirmPasswordRequired = "Confirm password is required";
 
 }
