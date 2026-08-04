@@ -5,15 +5,15 @@ import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
 @lazySingleton
 class SignInUsecase {
-  final AuthRepo authRepo;
-
-  SignInUsecase(this.authRepo);
-  Future<BaseResponse<UserEntity>> call(
-      String email,
-      String password,
-      bool rememberMe,
-      ) async {
-    final response = await authRepo.login(email, password, rememberMe);
-    return response;
-  }
+  // final AuthRepo authRepo;
+  //
+  // SignInUsecase(this.authRepo);
+  // Future<BaseResponse<UserEntity>> call(
+  //     String email,
+  //     String password,
+  //     bool rememberMe,
+  //     ) async {
+  //   final response = await authRepo.login(email, password, rememberMe);
+  //   return response;
+  // }
 }

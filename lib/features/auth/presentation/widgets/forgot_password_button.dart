@@ -7,6 +7,7 @@ import 'package:online_exam_app/core/shared/custom_text_button.dart';
 import 'package:online_exam_app/core/utils/app_colors.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
+import 'package:online_exam_app/features/auth/domain/entities/forgot_password_params.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/forgot_password_cubit/forgot_password_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/forgot_password_cubit/forgot_password_state.dart';
@@ -38,11 +39,9 @@ class ForgotPasswordButton extends StatelessWidget {
                 );
               },
               error: (message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                  ),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(message)));
               },
             );
           },
@@ -58,7 +57,11 @@ class ForgotPasswordButton extends StatelessWidget {
                   : () {
                       if (formKey.currentState!.validate()) {
                         context.read<ForgotPasswordCubit>().doEvent(
-                          ForgotPasswordEvent(email: emailController.text),
+                          ForgotPasswordEvent(
+                            params: ForgotPasswordParams(
+                              email: emailController.text,
+                            ),
+                          ),
                         );
                       }
                     },

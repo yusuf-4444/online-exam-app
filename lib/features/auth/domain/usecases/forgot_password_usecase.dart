@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:online_exam_app/core/config/base_response/base_response.dart';
 import 'package:online_exam_app/features/auth/domain/entities/forgot_password_entity.dart';
+import 'package:online_exam_app/features/auth/domain/entities/forgot_password_params.dart';
 import 'package:online_exam_app/features/auth/domain/repo/auth_repo.dart';
 
 @lazySingleton
@@ -9,8 +10,10 @@ class ForgotPasswordUseCase {
 
   ForgotPasswordUseCase(this.authRepo);
 
-  Future<BaseResponse<ForgotPasswordEntity>> call(String email) async {
-    final response = await authRepo.forgotPassword(email);
+  Future<BaseResponse<ForgotPasswordEntity>> call(
+    ForgotPasswordParams params,
+  ) async {
+    final response = await authRepo.forgotPassword(params);
     return response;
   }
 }
