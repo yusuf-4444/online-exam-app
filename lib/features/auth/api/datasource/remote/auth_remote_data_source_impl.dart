@@ -4,6 +4,8 @@ import 'package:online_exam_app/features/auth/api/client/auth_api_client.dart';
 import 'package:online_exam_app/features/auth/data/datasource/remote/auth_remote_data_source.dart';
 import 'package:online_exam_app/features/auth/data/models/forgot_password_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/forgot_password_response_model.dart';
+import 'package:online_exam_app/features/auth/data/models/reset_password_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/reset_password_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/verify_otp_request_model.dart';
@@ -48,6 +50,20 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       final response = await authApiClient.verifyResetCode(
         request: requestModel,
+      );
+      return SuccessResponse(response);
+    } catch (e) {
+      return ErrorResponse(error: e is Exception ? e : Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<BaseResponse<ResetPasswordResponseModel>> resetPassword(
+    ResetPasswordRequestModel requestModel,
+  ) async {
+    try {
+      final response = await authApiClient.resetPassword(
+        requestModel,
       );
       return SuccessResponse(response);
     } catch (e) {

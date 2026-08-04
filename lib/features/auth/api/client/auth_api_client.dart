@@ -3,6 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:online_exam_app/core/constants/api_endpoints.dart';
 import 'package:online_exam_app/features/auth/data/models/forgot_password_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/forgot_password_response_model.dart';
+import 'package:online_exam_app/features/auth/data/models/reset_password_request_model.dart';
+import 'package:online_exam_app/features/auth/data/models/reset_password_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_request_model.dart';
 import 'package:online_exam_app/features/auth/data/models/sign_in_response_model.dart';
 import 'package:online_exam_app/features/auth/data/models/verify_otp_request_model.dart';
@@ -30,6 +32,11 @@ abstract class AuthApiClient {
 
   @POST(ApiEndpoints.verifyResetCode)
   Future<VerifyOtpResponseModel> verifyResetCode({
-    @Body() required VerifyOtpRequestModel  request,
+    @Body() required VerifyOtpRequestModel request,
   });
+
+  @PUT(ApiEndpoints.resetPassword)
+  Future<ResetPasswordResponseModel> resetPassword(
+    @Body() ResetPasswordRequestModel request,
+  );
 }
