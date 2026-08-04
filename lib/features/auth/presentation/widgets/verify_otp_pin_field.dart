@@ -6,6 +6,7 @@ import 'package:online_exam_app/core/routing/app_routes.dart';
 import 'package:online_exam_app/core/utils/app_strings.dart';
 import 'package:online_exam_app/core/utils/app_text_styles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_exam_app/features/auth/domain/entities/verify_otp_params.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/verify_otp_cubit/verify_otp_cubit.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/verify_otp_cubit/verify_otp_intent.dart';
 import 'package:online_exam_app/features/auth/presentation/view_model/verify_otp_cubit/verify_otp_state.dart';
@@ -43,7 +44,9 @@ class _VerifyOtpPinFieldState extends State<VerifyOtpPinField> {
         focusNodes[index + 1].requestFocus();
       } else {
         final otp = controllers.map((e) => e.text).join();
-        context.read<VerifyOtpCubit>().doEvent(VerifyOtpEvent(resetCode: otp));
+        context.read<VerifyOtpCubit>().doEvent(
+          VerifyOtpEvent(params: VerifyOtpParams(resetCode: otp)),
+        );
       }
     }
   }
